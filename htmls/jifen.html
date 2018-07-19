@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+
+<script src="//cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+</head>
+<body>
+<!--<form action="/t8/csrf" method="post">-->
+    <!--{%csrf_token%}-->
+    <!--用户名：<input type="text" name="u_name">-->
+    <!--<br>-->
+    <!--积分： <input type="text" name="num">-->
+    <!--<br>-->
+    <!--<input type="submit" value="充值">-->
+<!--</form>-->
+
+用户名：<input type="text" name="u_name" id="u_name">
+    <br>
+    积分： <input type="text" name="num" id="num">
+    <br>
+    <button onclick="commit()">充值</button>
+</body>
+<script>
+    function commit() {
+        var csrf = $.cookie("csrftoken");
+        console.log(csrf);
+        var u_name = $("#u_name").val();
+        var num = $("#num").val();
+        $.ajax({
+            url:"/t8/csrf",
+            method:"post",
+            data:{
+                "u_name": u_name,
+                "num": num,
+                'csrfmiddlewaretoken': csrf
+            },
+            success:function (data) {
+                alert(data);
+            }
+        })
+    }
+</script>
+</html>
